@@ -4,6 +4,7 @@ html, body {
 
 body {
 	background-color:#ffffff;
+	font-family: "Karla", sans-serif;
 }
 
 .displaynone {
@@ -18,11 +19,22 @@ body {
 	/* Pad bottom by footer height */
 	padding: 0 0 60px;
 }
+#header {
+	width: 100%;
+    background-image: linear-gradient(to right top, #44938E, #5681C2);
+	color: #fff;
+}
+.white {
+	color: #fff;
+}
 
 #footer {
 	height: 60px;
-	background-color: #f5f5f5;
+    background-color: #1d1d1d;
 	padding-top: 20px;
+    color: #fff;
+	font-family: "Karla", sans-serif;
+
 }
 
 .alert {
