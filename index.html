@@ -59,7 +59,6 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> New<b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li><a href="#newAddress" data-toggle="tab">Address</a></li>
-									<li><a href="#newSegWit" data-toggle="tab">SegWit Address</a></li>
 									<li><a href="#newMultiSig" data-toggle="tab">MultiSig Address</a></li>
 									<li><a href="#newTimeLocked" data-toggle="tab">Time Locked Address</a></li>
 									<li><a href="#newHDaddress" data-toggle="tab">HD Address</a></li>
@@ -86,53 +85,64 @@
 
 				<div class="tab-content">
 					<div class="tab-pane tab-content active" id="home">
-						<div class="row">
-							<div class="col-md-12">
-								<h2>Coinb.in <small>Welcome to the Blockchain</small></h2>
-							</div>
+						<h2>New Address <small>create a new address</small></h2>
+						<p>Any keys used you will need to manually store safely as they will be needed later to redeem the bitcoins.</p>
+						<label>Address (Share)</label>
+
+						<div class="input-group">
+							<input id="newBitcoinAddress" type="text" class="form-control address" value="" readonly>
+							<span class="input-group-btn">
+								<button class="qrcodeBtn btn btn-default" type="button" data-toggle="modal" data-target="#modalQrcode"><span class="glyphicon glyphicon-qrcode"></span></button>
+							</span>
 						</div>
 
-						<div class="jumbotron">
-							<h1>Bitcoin. It's your money!</h1>
-							<p>Be your own bank, take control of your own money and start using Bitcoin today!</p>
-							<p><a class="btn btn-primary btn-lg" href="#about" role="button">Learn more &raquo;</a></p>
+						<label>Public key (Share)</label>
+						<input id="newPubKey" type="text" class="form-control" readonly>
+						<label>Private key (WIF key)</label>
+						<div class="input-group">
+							<input id="newPrivKey" type="password" class="form-control" value="" readonly>
+							<span class="input-group-btn">
+								<button class="showKey btn btn-default" type="button">Show</button>
+							</span>
 						</div>
 
-						<hr>
-
-						<div class="row">
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-ok"></span> Open Source</h3>
-								<p>Coinbin is an open source web based wallet written in javascript and released under the <a href="LICENSE">MIT license</a> which means it's free to use and edit.</p>
-							</div>
-
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-fullscreen"></span> MultiSig</h3>
-								<p>We offer a fully transparent <a href="#newMultiSig">multisig</a> solution which works seamlessly offline and with other bitcoin clients.</p>
-							</div>
-
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-bitcoin"></span> Raw Transactions</h3>
-								<p><a href="#newTransaction">Create</a>, <a href="#verify">verify</a>, <a href="#sign">sign</a> and <a href="#broadcast">broadcast</a> custom raw transactions online with advanced features and minimal effort!</p>
-							</div>
+						<div id="aes256wifkey" class="hidden">
+							<label>AES-256 Encrypted WIF key</label>
+							<input id="newPrivKeyEnc" type="text" class="form-control" value="" readonly>
 						</div>
 
-						<div class="row">
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-piggy-bank"></span> Wallet</h3>
-								<p>Quick access to an <a href="#wallet">online wallet</a> where only you have access to your own private keys &amp; can <a href="#fees">calculate your own fee</a>!</p>
-							</div>
-
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-globe"></span> Addresses</h3>
-								<p>We support <a href="#newAddress">regular addresses</a>, <a href="#newMultiSig">multisig</a>, <a href="#newSegWit">segwit / bech32</a> and stealth all with access to your own private keys!</p>
-							</div>
-
-							<div class="col-md-4">
-								<h3><span class="glyphicon glyphicon-wrench"></span>  Development</h3>
-								<p>Use what we've built to write your own projects! See our documention (coming soon), or contribute at <a href="https://github.com/OutCast3k/coinbin/">github</a>.</p>
-							</div>
+						<h3>Address Options</h3>
+						<p>You can use the advanced options below to generate different kind of keys and addresses.</p>
+						<div class="checkbox">
+							<label><input type="checkbox" id="newCompressed" class="checkbox-inline" checked> Compress <span class="text-muted">(recommended)</span></label>
 						</div>
+						<div class="checkbox">
+							<label><input type="checkbox" id="newBrainwallet" class="checkbox-inline"> Custom Seed or Brain Wallet</label>
+							<input type="text" class="form-control hidden" id="brainwallet">
+						</div>
+
+						<div class="checkbox">
+							<label><input type="checkbox" id="encryptKey" class="checkbox-inline"> Encrypt Private Key with AES-256 Password</label>
+							<div id="aes256passform" class="row hidden">
+								<div class="col-md-6">
+									<input type="password" class="form-control" id="aes256pass" placeholder="Password"></label>
+								</div>
+								<div class="col-md-6">
+									<input type="password" class="form-control" id="aes256pass_confirm" placeholder="Confirm Password">
+								</div>
+							</div>
+
+							<div id="aes256passStatus" class="row hidden">
+								<div class="col-md-12">
+									<br>
+									<div class="alert alert-danger"> <span class="glyphicon glyphicon-exclamation-sign"></span> Your passwords do not match, please try again!</div>
+								</div>
+							</div>
+
+						</div>
+
+						<input type="button" class="btn btn-primary" value="Generate" id="newKeysBtn">
+						<br>
 					</div>
 
 					<div class="tab-pane tab-content" id="wallet">
@@ -339,51 +349,6 @@
 						</div>
 
 						<input type="button" class="btn btn-primary" value="Generate" id="newKeysBtn">
-						<br>
-					</div>
-
-					<div class="tab-pane tab-content" id="newSegWit">
-						<h2>New SegWit Address <small> Smaller &amp; Faster Transactions</small></h2>
-
-						<p>Any keys used you will need to manually store safely as they will be needed later to redeem the bitcoins.</p>
-
-						<label>SegWit Address (Share)</label>
-
-						<div class="input-group">
-							<input id="newSegWitAddress" type="text" class="form-control address" value="" readonly>
-							<span class="input-group-btn">
-								<button class="qrcodeBtn btn btn-default" type="button" data-toggle="modal" data-target="#modalQrcode"><span class="glyphicon glyphicon-qrcode"></span></button>
-							</span>
-						</div>
-
-						<label>RedeemScript</label>
-						<input id="newSegWitRedeemScript" type="text" class="form-control" readonly>
-
-						<label>Public key</label>
-						<input id="newSegWitPubKey" type="text" class="form-control" readonly>
-
-						<label>Private key (WIF key)</label>
-						<div class="input-group">
-							<input id="newSegWitPrivKey" type="password" class="form-control" value="" readonly>
-							<span class="input-group-btn">
-								<button class="showKey btn btn-default" type="button">Show</button>
-							</span>
-						</div>
-
-
-						<h3>Address Options</h3>
-						<p>You can use the advanced options below to generate different kind of keys and addresses.</p>
-
-						<div class="checkbox">
-							<label><input type="checkbox" id="newSegWitBech32addr" class="checkbox-inline" checked> Enable <a href="https://en.bitcoin.it/wiki/Bech32" target="_blank">Bech32</a>?</label>
-						</div>
-
-						<div class="checkbox">
-							<label><input type="checkbox" id="newSegWitBrainwallet" class="checkbox-inline"> Custom Seed or Brain Wallet</label>
-							<input type="text" class="form-control hidden" id="brainwalletSegWit">
-						</div>
-
-						<input type="button" class="btn btn-primary" value="Generate" id="newSegWitKeysBtn">
 						<br>
 					</div>
 
